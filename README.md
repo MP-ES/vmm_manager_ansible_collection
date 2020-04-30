@@ -24,7 +24,7 @@ poetry completions bash | sudo tee /etc/bash_completion.d/poetry.bash-completion
 poetry install --no-root
 ```
 
-## Referências
+## References
 
 - [vmm_manager](https://github.com/MP-ES/vmm_manager)
 - [Developing Ansible collections](https://docs.ansible.com/ansible/latest/dev_guide/developing_collections.html#developing-collections)
