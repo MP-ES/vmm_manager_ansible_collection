@@ -24,6 +24,24 @@ poetry completions bash | sudo tee /etc/bash_completion.d/poetry.bash-completion
 poetry install --no-root
 ```
 
+### Configurations
+
+Set the enviromment variable **ANSIBLE_INVENTORY_PLUGINS**:
+
+```shell
+export ANSIBLE_INVENTORY_PLUGINS='plugins/inventory'
+```
+
+### Tests
+
+```shell
+# Check documentation
+ansible-doc -t inventory vmm_manager
+
+# Test inventory list
+ansible-inventory -i test_vmm_manager.yaml --list
+```
+
 ## References
 
 - [vmm_manager](https://github.com/MP-ES/vmm_manager)

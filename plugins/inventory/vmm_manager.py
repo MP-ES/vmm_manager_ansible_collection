@@ -1,6 +1,7 @@
 from __future__ import (absolute_import, division, print_function)
 from ansible.errors import AnsibleError, AnsibleParserError
 from ansible.plugins.inventory import BaseInventoryPlugin
+from shutil import which
 import re
 __metaclass__ = type
 
@@ -42,6 +43,7 @@ count: 4
 
 class InventoryModule(BaseInventoryPlugin):
     NAME = 'vmm_manager'
+    VMM_MANAGER_APP = 'vmm_manager'
 
     def verify_file(self, path):
         '''Return true/false if this is possibly a valid file for this plugin to consume
@@ -52,4 +54,16 @@ class InventoryModule(BaseInventoryPlugin):
 
     def parse(self, inventory, loader, path, cache):
         '''Return dynamic inventory from source '''
-        return 'Teste'
+        super(InventoryModule, self).parse(inventory, loader, path)
+
+        config_data = self._read_config_data(path)
+        self.setup(config_data, cache)
+
+    def setup(self, config_data, cache):
+        if not self.has_vmm_manager():
+            raise AnsibleError(
+                'This module requires the vmm_manager app. Try `pip install vmm-manager`.'
+            )
+
+    def has_vmm_manager(self):
+        return which(InventoryModule.VMM_MANAGER_APP) is not None
