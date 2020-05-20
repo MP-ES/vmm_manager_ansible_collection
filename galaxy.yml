@@ -5,7 +5,6 @@ name: vmm_manager
 version: 0.1.0b0
 
 
-version_added: "2.9"
 readme: README.md
 authors:
 - Estevão Costa <ecosta@mpes.mp.br>

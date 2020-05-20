@@ -1,2 +1,8 @@
 plugin: vmm_manager
-count: 4
+vmm_inventario: inventory.yaml
+
+# Best pratices: use enviromment variables to set this parameters
+vmm_servidor_acesso: 'access_server'
+vmm_servidor: 'scvmm_server'
+vmm_usuario: 'username'
+vmm_senha: 'password'
