@@ -1,5 +1,5 @@
 plugin: vmm_manager
-vmm_inventario: inventory.yaml
+vmm_inventario: test_inventory.yaml
 
 # Best pratices: use enviromment variables to set this parameters
 # vmm_servidor_acesso: 'access_server'
