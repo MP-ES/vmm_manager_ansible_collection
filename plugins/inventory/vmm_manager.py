@@ -5,7 +5,8 @@ vmm_manager inventory plugin
 from __future__ import (absolute_import, division, print_function)
 import re
 import subprocess
-from subprocess import SubprocessError
+import json
+from subprocess import PIPE, STDOUT, SubprocessError
 from shutil import which
 from ansible.errors import AnsibleError
 from ansible.plugins.inventory import BaseInventoryPlugin
@@ -118,8 +119,11 @@ class InventoryModule(BaseInventoryPlugin):
         Run vmm_manager command
         """
         try:
-            self.command_result = subprocess.run(
-                self.command, capture_output=True, check=True)
+            command_exec = subprocess.run(
+                self.command, stdout=PIPE,
+                stderr=STDOUT, check=True)
+            self.command_result = json.loads(command_exec.stdout.decode())
+            print(self.command_result)
         except SubprocessError as error:
             # pylint: disable=no-member
             raise AnsibleError('vmm_manager error: {}\n{}'.format(
@@ -134,3 +138,19 @@ class InventoryModule(BaseInventoryPlugin):
                 'This module requires the vmm_manager app. Try `pip install vmm-manager`.'
             )
         self.command.append(InventoryModule.VMM_MANAGER_APP)
+
+        self.command.append('--servidor-acesso')
+        self.command.append(self.get_option('vmm_servidor_acesso'))
+        self.command.append('--servidor')
+        self.command.append(self.get_option('vmm_servidor'))
+
+        self.command.append('--usuario')
+        self.command.append(self.get_option('vmm_usuario'))
+        self.command.append('--senha')
+        self.command.append(self.get_option('vmm_senha'))
+
+        self.command.append('-o')
+        self.command.append('show')
+
+        self.command.append('--inventario')
+        self.command.append(self.get_option('vmm_inventario'))
