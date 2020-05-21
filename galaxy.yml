@@ -1,0 +1,44 @@
+### REQUIRED
+
+namespace: mpes
+name: vmm_manager
+version: 0.1.0b0
+
+
+readme: README.md
+authors:
+- Estevão Costa <ecosta@mpes.mp.br>
+
+
+### OPTIONAL but strongly recommended
+
+description: Ansible collection to support vmm_manager application on Ansible codes.
+
+# A valid SPDX license identifier https://spdx.org/licenses/
+license_file: LICENSE
+
+# A list of tags you want to associate with the collection for indexing/searching. A tag name has the same character
+# requirements as 'namespace' and 'name'
+tags:
+  - vmm_manager
+  - scvmm
+  - IaC
+
+
+# Collections that this collection requires to be installed for it to be usable. The key of the dict is the
+# collection label 'namespace.name'. The value is a version range
+# L(specifiers,https://python-semanticversion.readthedocs.io/en/latest/#requirement-specification). Multiple version
+# range specifiers can be set and are separated by ','
+dependencies: {}
+
+# The URL of the originating SCM repository
+repository: https://github.com/MP-ES/vmm_manager_ansible_collection
+
+# The URL to any online docs
+documentation: https://github.com/MP-ES/vmm_manager_ansible_collection
+
+# The URL to the homepage of the collection/project
+homepage: https://github.com/MP-ES/vmm_manager_ansible_collection
+
+# The URL to the collection issue tracker
+issues: https://github.com/MP-ES/vmm_manager_ansible_collection/issues

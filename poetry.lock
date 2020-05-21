@@ -208,7 +208,7 @@ description = "More routines for operating on iterables, beyond itertools"
 name = "more-itertools"
 optional = false
 python-versions = ">=3.5"
-version = "8.2.0"
+version = "8.3.0"
 
 [[package]]
 category = "dev"
@@ -216,7 +216,7 @@ description = "Core utilities for Python packages"
 name = "packaging"
 optional = false
 python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
-version = "20.3"
+version = "20.4"
 
 [package.dependencies]
 pyparsing = ">=2.0.2"
@@ -485,7 +485,7 @@ description = "Management of resources on System Center Virtual Machine Manager 
 name = "vmm-manager"
 optional = false
 python-versions = ">=3.7,<4.0"
-version = "0.1.0b1"
+version = "0.1.0b2"
 
 [package.dependencies]
 configargparse = ">=1.2,<2.0"
@@ -549,7 +549,7 @@ docs = ["sphinx", "jaraco.packaging (>=3.2)", "rst.linker (>=1.9)"]
 testing = ["jaraco.itertools", "func-timeout"]
 
 [metadata]
-content-hash = "d4b6652a770ba426eb6d2549703a407bebd50e4894bc86d92142e4cf43b1b5b1"
+content-hash = "7ac5947f1cfee5149734eb686c15a54ee067ff710ff872fe6b3abe1609da97f9"
 python-versions = "^3.7"
 
 [metadata.files]
@@ -728,12 +728,12 @@ mccabe = [
     {file = "mccabe-0.6.1.tar.gz", hash = "sha256:dd8d182285a0fe56bace7f45b5e7d1a6ebcbf524e8f3bd87eb0f125271b8831f"},
 ]
 more-itertools = [
-    {file = "more-itertools-8.2.0.tar.gz", hash = "sha256:b1ddb932186d8a6ac451e1d95844b382f55e12686d51ca0c68b6f61f2ab7a507"},
-    {file = "more_itertools-8.2.0-py3-none-any.whl", hash = "sha256:5dd8bcf33e5f9513ffa06d5ad33d78f31e1931ac9a18f33d37e77a180d393a7c"},
+    {file = "more-itertools-8.3.0.tar.gz", hash = "sha256:558bb897a2232f5e4f8e2399089e35aecb746e1f9191b6584a151647e89267be"},
+    {file = "more_itertools-8.3.0-py3-none-any.whl", hash = "sha256:7818f596b1e87be009031c7653d01acc46ed422e6656b394b0f765ce66ed4982"},
 ]
 packaging = [
-    {file = "packaging-20.3-py2.py3-none-any.whl", hash = "sha256:82f77b9bee21c1bafbf35a84905d604d5d1223801d639cf3ed140bd651c08752"},
-    {file = "packaging-20.3.tar.gz", hash = "sha256:3c292b474fda1671ec57d46d739d072bfd495a4f51ad01a055121d81e952b7a3"},
+    {file = "packaging-20.4-py2.py3-none-any.whl", hash = "sha256:998416ba6962ae7fbd6596850b80e17859a5753ba17c32284f67bfff33784181"},
+    {file = "packaging-20.4.tar.gz", hash = "sha256:4357f74f47b9c12db93624a82154e9b120fa8293699949152b22065d556079f8"},
 ]
 paramiko = [
     {file = "paramiko-2.7.1-py2.py3-none-any.whl", hash = "sha256:9c980875fa4d2cb751604664e9a2d0f69096643f5be4db1b99599fe114a97b2f"},
@@ -887,8 +887,8 @@ typed-ast = [
     {file = "typed_ast-1.4.1.tar.gz", hash = "sha256:8c8aaad94455178e3187ab22c8b01a3837f8ee50e09cf31f1ba129eb293ec30b"},
 ]
 vmm-manager = [
-    {file = "vmm_manager-0.1.0b1-py3-none-any.whl", hash = "sha256:71dca3487f5c93c9290ae5d47f14b15c34e3d5b3f48219649aec9d27b46189f4"},
-    {file = "vmm_manager-0.1.0b1.tar.gz", hash = "sha256:407876e982adc39794c4804e53c1a5d53fd1b0bfc0013ae62a365402fec18952"},
+    {file = "vmm_manager-0.1.0b2-py3-none-any.whl", hash = "sha256:c29bddd57adf3662cd7501369ded24251ccb039197312c2000992d29e654eb11"},
+    {file = "vmm_manager-0.1.0b2.tar.gz", hash = "sha256:f28ddd3d7b20ef83ebe92f53575e5ac2dd432fb6d19efab25d65061ca3b2759a"},
 ]
 wcwidth = [
     {file = "wcwidth-0.1.9-py2.py3-none-any.whl", hash = "sha256:cafe2186b3c009a04067022ce1dcd79cb38d8d65ee4f4791b8888d6599d1bbe1"},

@@ -1,0 +1,10 @@
+agrupamento: vmm_manager_test
+nuvem: "developer"
+imagem_padrao: "vm_linux"
+qtde_cpu_padrao: 1
+qtde_ram_mb_padrao: 512
+redes_padrao:
+  - nome: "vlan1"
+    principal: true
+vms:
+  - nome: VMM_TEST1
