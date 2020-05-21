@@ -7,7 +7,6 @@ import re
 import subprocess
 import json
 import os
-from subprocess import PIPE, STDOUT, SubprocessError
 from shutil import which
 from ansible.errors import AnsibleError
 from ansible.plugins.inventory import BaseInventoryPlugin
@@ -123,10 +122,10 @@ class InventoryModule(BaseInventoryPlugin):
         """
         try:
             command_exec = subprocess.run(
-                self.command, stdout=PIPE,
-                stderr=STDOUT, check=True, env=self.envs)
+                self.command, stdout=subprocess.PIPE,
+                stderr=subprocess.STDOUT, check=True, env=self.envs)
             self.command_result = json.loads(command_exec.stdout.decode())
-        except SubprocessError as error:
+        except subprocess.SubprocessError as error:
             # pylint: disable=no-member
             raise AnsibleError('vmm_manager error: {}\n{}'.format(
                 error, error.output.decode()))
