@@ -5,7 +5,8 @@ vmm_manager inventory plugin
 from __future__ import (absolute_import, division, print_function)
 import re
 import subprocess
-from subprocess import SubprocessError
+import json
+import os
 from shutil import which
 from ansible.errors import AnsibleError
 from ansible.plugins.inventory import BaseInventoryPlugin
@@ -91,6 +92,7 @@ class InventoryModule(BaseInventoryPlugin):
     def __init__(self):
         super().__init__()
         self.command = []
+        self.envs = os.environ.copy()
         self.command_result = None
 
     def verify_file(self, path):
@@ -112,15 +114,18 @@ class InventoryModule(BaseInventoryPlugin):
         self.__setup()
 
         self.__run_command()
+        self.__populate()
 
     def __run_command(self):
         """
         Run vmm_manager command
         """
         try:
-            self.command_result = subprocess.run(
-                self.command, capture_output=True, check=True)
-        except SubprocessError as error:
+            command_exec = subprocess.run(
+                self.command, stdout=subprocess.PIPE,
+                stderr=subprocess.STDOUT, check=True, env=self.envs)
+            self.command_result = json.loads(command_exec.stdout.decode())
+        except subprocess.SubprocessError as error:
             # pylint: disable=no-member
             raise AnsibleError('vmm_manager error: {}\n{}'.format(
                 error, error.output.decode()))
@@ -134,3 +139,69 @@ class InventoryModule(BaseInventoryPlugin):
                 'This module requires the vmm_manager app. Try `pip install vmm-manager`.'
             )
         self.command.append(InventoryModule.VMM_MANAGER_APP)
+
+        self.command.append('--servidor-acesso')
+        self.command.append(self.get_option('vmm_servidor_acesso'))
+        self.command.append('--servidor')
+        self.command.append(self.get_option('vmm_servidor'))
+
+        self.command.append('-o')
+        self.command.append('show')
+
+        self.command.append('--inventario')
+        self.command.append(self.get_option('vmm_inventario'))
+
+        # user and password as env
+        self.envs['VMM_USUARIO'] = self.get_option('vmm_usuario')
+        self.envs['VMM_SENHA'] = self.get_option('vmm_senha')
+
+    def __populate(self):
+        all_groups = []
+
+        for vm_obj in self.command_result.get('vms'):
+            groups_vm = []
+
+            # iterate over ansible data
+            for ansible_entry in vm_obj.get('ansible'):
+                group = ansible_entry.get('grupo')
+                groups_vm.append(group)
+
+                if group not in all_groups:
+                    self.inventory.add_group(group)
+                    all_groups.append(group)
+
+            # add host just if it is in a group
+            if groups_vm:
+                host = vm_obj.get('nome')
+                self.inventory.add_host(host)
+
+                for group_vm in groups_vm:
+                    self.inventory.add_child(group_vm, host)
+
+                # add hostvars
+                self.inventory.set_variable(
+                    host, 'ansible_host', [network.get('ips')[0]
+                                           for network in vm_obj.get('redes')
+                                           if network.get('principal')].pop())
+
+                self.inventory.set_variable(
+                    host, 'vm_id', vm_obj.get('id_vmm'))
+                self.inventory.set_variable(
+                    host, 'vm_description', vm_obj.get('descricao'))
+                self.inventory.set_variable(
+                    host, 'vm_image', vm_obj.get('imagem'))
+
+                self.inventory.set_variable(
+                    host, 'vm_region', vm_obj.get('regiao'))
+                self.inventory.set_variable(
+                    host, 'vm_region_server', vm_obj.get('no_regiao'))
+
+                self.inventory.set_variable(
+                    host, 'vm_status', vm_obj.get('status'))
+                self.inventory.set_variable(
+                    host, 'vm_cpu', vm_obj.get('qtde_cpu'))
+                self.inventory.set_variable(
+                    host, 'vm_ram_mb', vm_obj.get('qtde_ram_mb'))
+
+                self.inventory.set_variable(
+                    host, 'network_json', vm_obj.get('redes'))
