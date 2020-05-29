@@ -23,10 +23,6 @@ DOCUMENTATION = r'''
     description:
         - Fetch virtual machines from SCVMM through vmm_manager app.
     options:
-        plugin:
-            description: Marks this as an instance of the 'vmm_manager' plugin
-            required: True
-            choices: ['vmm_manager']
         vmm_servidor_acesso:
             description: Windows server with OpenSSH and access to SCVMM PowerShell
             type: string
