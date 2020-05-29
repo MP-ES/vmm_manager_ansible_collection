@@ -23,6 +23,10 @@ DOCUMENTATION = r'''
     description:
         - Fetch virtual machines from SCVMM through vmm_manager app.
     options:
+        plugin:
+            description: Marks this as an instance of the 'vmm_manager' plugin
+            required: True
+            choices: ['estevao90.vmm_manager.vmm_manager']
         vmm_servidor_acesso:
             description: Windows server with OpenSSH and access to SCVMM PowerShell
             type: string
@@ -75,7 +79,7 @@ class InventoryModule(BaseInventoryPlugin):
     """
     Ansible Inventory plugin class
     """
-    NAME = 'vmm_manager'
+    NAME = 'estevao90.vmm_manager.vmm_manager'
     VMM_MANAGER_APP = 'vmm_manager'
 
     @staticmethod
