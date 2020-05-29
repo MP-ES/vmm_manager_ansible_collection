@@ -149,7 +149,7 @@ class InventoryModule(BaseInventoryPlugin):
         self.command.append('show')
 
         self.command.append('--inventario')
-        self.command.append(self.get_option('vmm_inventario'))
+        self.command.append(os.path.abspath(self.get_option('vmm_inventario')))
 
         # user and password as env
         self.envs['VMM_USUARIO'] = self.get_option('vmm_usuario')
