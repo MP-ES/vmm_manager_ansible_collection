@@ -1,8 +1,8 @@
 ### REQUIRED
 
-namespace: mpes
+namespace: estevao90
 name: vmm_manager
-version: 0.1.0b0
+version: 0.0.1
 
 
 readme: README.md
@@ -22,7 +22,7 @@ license_file: LICENSE
 tags:
   - vmm_manager
   - scvmm
-  - IaC
+  - mpes
 
 
 # Collections that this collection requires to be installed for it to be usable. The key of the dict is the
