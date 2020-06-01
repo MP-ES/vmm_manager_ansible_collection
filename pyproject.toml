@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "vmm_manager_ansible_collection"
-version = "0.1.0b0"
+version = "0.0.1"
 description = "Ansible Collection to support vmm_manager application on Ansible codes."
 authors = ["Estevão Costa <ecosta@mpes.mp.br>"]
 
