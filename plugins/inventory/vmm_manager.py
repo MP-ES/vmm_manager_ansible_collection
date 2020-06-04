@@ -141,8 +141,8 @@ class InventoryModule(BaseInventoryPlugin):
             self.command_result = json.loads(command_exec.stdout.decode())
         except subprocess.SubprocessError as error:
             # pylint: disable=no-member
-            raise AnsibleError('vmm_manager error: {}\n{}'.format(
-                error, error.output.decode()))
+            raise AnsibleError(
+                f'vmm_manager error: {error}\n{error.output.decode()}')
 
     def __setup(self):
         """
@@ -172,12 +172,10 @@ class InventoryModule(BaseInventoryPlugin):
     def __is_ssh_priv_key_ok(self, host_ip):
         try:
             command_exec = subprocess.run(
-                'ssh -i {} -o "BatchMode yes" -o "StrictHostKeyChecking no" \
+                f'ssh -i {self.get_option("vmm_ssh_priv_key_file")} \
+                -o "BatchMode yes" -o "StrictHostKeyChecking no" \
                 -o "IdentitiesOnly yes" -o "PreferredAuthentications publickey" \
-                -o "ControlMaster no" {}@{} exit 0'.format(
-                    self.get_option('vmm_ssh_priv_key_file'),
-                    self.get_option('vmm_ssh_user'),
-                    host_ip),
+                -o "ControlMaster no" {self.get_option("vmm_ssh_user")}@{host_ip} exit 0',
                 stdout=subprocess.PIPE,
                 stderr=subprocess.STDOUT,
                 shell=True, check=True, env=self.envs)
