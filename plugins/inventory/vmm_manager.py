@@ -58,6 +58,18 @@ DOCUMENTATION = r'''
             secret: True
             env:
                 - name: VMM_SENHA
+        vmm_ssh_priv_key_file:
+            description: Private SSH key to access the VM's. If the access is valid, the plugin set the ansible var ansible_ssh_private_key_file
+            type: string
+            required: True
+            env:
+                - name: VMM_SSH_PRIV_KEY_FILE
+        vmm_ssh_user:
+            description: SSH user to access the VM's
+            type: string
+            required: True
+            env:
+                - name: VMM_SSH_USER
     requirements:
         - python >= 3.7
         - vmm_manager >= 0.1.0b2
@@ -72,6 +84,8 @@ vmm_servidor_acesso: 'access_server'
 vmm_servidor: 'scvmm_server'
 vmm_usuario: 'username'
 vmm_senha: 'password'
+vmm_ssh_priv_key_file: '/private/key'
+vmm_ssh_user: user
 '''
 
 
@@ -155,6 +169,22 @@ class InventoryModule(BaseInventoryPlugin):
         self.envs['VMM_USUARIO'] = self.get_option('vmm_usuario')
         self.envs['VMM_SENHA'] = self.get_option('vmm_senha')
 
+    def __is_ssh_priv_key_ok(self, host_ip):
+        try:
+            command_exec = subprocess.run(
+                'ssh -i {} -o "BatchMode yes" -o "StrictHostKeyChecking no" \
+                    -o "IdentitiesOnly yes" -o "PreferredAuthentications publickey" \
+                    -o "ControlMaster no" {}@{} exit 0'.format(
+                    self.get_option('vmm_ssh_priv_key_file'),
+                    self.get_option('vmm_ssh_user'),
+                    host_ip),
+                stdout=subprocess.PIPE,
+                stderr=subprocess.STDOUT,
+                shell=True, check=True, env=self.envs)
+            return command_exec.returncode == 0
+        except subprocess.SubprocessError:
+            return False
+
     def __populate(self):
         all_groups = []
 
@@ -179,10 +209,16 @@ class InventoryModule(BaseInventoryPlugin):
                     self.inventory.add_child(group_vm, host)
 
                 # add hostvars
+                host_ip = [network.get('ips')[0]
+                           for network in vm_obj.get('redes')
+                           if network.get('principal')].pop()
+
                 self.inventory.set_variable(
-                    host, 'ansible_host', [network.get('ips')[0]
-                                           for network in vm_obj.get('redes')
-                                           if network.get('principal')].pop())
+                    host, 'ansible_host', host_ip)
+                if self.__is_ssh_priv_key_ok(host_ip):
+                    self.inventory.set_variable(
+                        host, 'ansible_ssh_private_key_file',
+                        self.get_option('vmm_ssh_priv_key_file'))
 
                 self.inventory.set_variable(
                     host, 'vm_id', vm_obj.get('id_vmm'))
