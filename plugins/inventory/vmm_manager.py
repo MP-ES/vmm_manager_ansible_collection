@@ -173,8 +173,8 @@ class InventoryModule(BaseInventoryPlugin):
         try:
             command_exec = subprocess.run(
                 'ssh -i {} -o "BatchMode yes" -o "StrictHostKeyChecking no" \
-                    -o "IdentitiesOnly yes" -o "PreferredAuthentications publickey" \
-                    -o "ControlMaster no" {}@{} exit 0'.format(
+                -o "IdentitiesOnly yes" -o "PreferredAuthentications publickey" \
+                -o "ControlMaster no" {}@{} exit 0'.format(
                     self.get_option('vmm_ssh_priv_key_file'),
                     self.get_option('vmm_ssh_user'),
                     host_ip),
