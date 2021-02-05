@@ -11,13 +11,13 @@ Ansible collection to support [vmm_manager](https://github.com/MP-ES/vmm_manager
 ### python-poetry configuration
 
 ```shell
-# poetry installation
+# instalar o poetry
 curl -sSL https://raw.githubusercontent.com/sdispater/poetry/master/get-poetry.py | python
 echo 'source $HOME/.poetry/env' >>~/.bashrc
 
-# autocomplete configuration
+# Configurar autocomplete
 # Bash
-poetry completions bash | sudo tee /etc/bash_completion.d/poetry.bash-completion
+$HOME/.poetry/bin/poetry completions bash | sudo tee /etc/bash_completion.d/poetry.bash-completion
 ```
 
 ### Dependencies
@@ -37,6 +37,12 @@ export ANSIBLE_INVENTORY_PLUGINS='plugins/inventory'
 ### Helpful developer commands
 
 ```shell
+# Load envs
+export $(cat .env | xargs)
+
+# developer shell
+poetry shell
+
 # Check documentation
 ansible-doc -t inventory vmm_manager
 

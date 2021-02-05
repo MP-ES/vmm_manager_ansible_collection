@@ -71,8 +71,8 @@ DOCUMENTATION = r'''
             env:
                 - name: VMM_SSH_USER
     requirements:
-        - python >= 3.7
-        - vmm_manager >= 0.1.0b2
+        - python >= 3.6
+        - vmm_manager >= 0.1
 '''
 
 EXAMPLES = r'''
