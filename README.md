@@ -37,11 +37,11 @@ export ANSIBLE_INVENTORY_PLUGINS='plugins/inventory'
 ### Helpful developer commands
 
 ```shell
-# Load envs
-export $(cat .env | xargs)
-
 # developer shell
 poetry shell
+
+# Load envs (optional)
+export $(cat .env | xargs)
 
 # Check documentation
 ansible-doc -t inventory vmm_manager

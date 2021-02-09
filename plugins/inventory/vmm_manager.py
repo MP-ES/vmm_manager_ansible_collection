@@ -113,7 +113,7 @@ class InventoryModule(BaseInventoryPlugin):
         """
         Return true/false if this is possibly a valid file for this plugin to consume
         """
-        if super(InventoryModule, self).verify_file(path):
+        if super().verify_file(path):
             if re.match(r'.{0,}vmm_manager\.y(a)?ml$', path):
                 return True
         return False
@@ -122,7 +122,7 @@ class InventoryModule(BaseInventoryPlugin):
         """
         Return dynamic inventory from source
         """
-        super(InventoryModule, self).parse(inventory, loader, path)
+        super().parse(inventory, loader, path)
 
         self._read_config_data(path)
         self.__setup()
@@ -142,7 +142,7 @@ class InventoryModule(BaseInventoryPlugin):
         except subprocess.SubprocessError as error:
             # pylint: disable=no-member
             raise AnsibleError(
-                f'vmm_manager error: {error}\n{error.output.decode()}')
+                f'vmm_manager error: {error}\n{error.output.decode()}') from error
 
     def __setup(self):
         """
