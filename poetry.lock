@@ -492,7 +492,7 @@ python-versions = "*"
 
 [[package]]
 name = "vmm-manager"
-version = "0.1.1"
+version = "0.1.2"
 description = "Management of resources on System Center Virtual Machine Manager (SCVMM) in a declarative way."
 category = "main"
 optional = false
@@ -938,8 +938,8 @@ typing-extensions = [
     {file = "typing_extensions-3.7.4.3.tar.gz", hash = "sha256:99d4073b617d30288f569d3f13d2bd7548c3a7e4c8de87db09a9d29bb3a4a60c"},
 ]
 vmm-manager = [
-    {file = "vmm_manager-0.1.1-py3-none-any.whl", hash = "sha256:ed45accaced3359eaea33a806aa20475c10d34f1300465a77eb1cef92b7eba21"},
-    {file = "vmm_manager-0.1.1.tar.gz", hash = "sha256:8ceb91313cad069ae9dbca8c7a4f220163743576c3e406944729440ba779ac21"},
+    {file = "vmm_manager-0.1.2-py3-none-any.whl", hash = "sha256:fa89522c261901282c1b61033d9fad6732bd38d2a8fdf903833d5b0395b21660"},
+    {file = "vmm_manager-0.1.2.tar.gz", hash = "sha256:e0cc192e9b35cc4a957ad0153f629891b3771a7495fec70e8bef08be2bd068a9"},
 ]
 wrapt = [
     {file = "wrapt-1.12.1.tar.gz", hash = "sha256:b62ffa81fb85f4332a4f609cab4ac40709470da05643a082ec1eb88e6d9b97d7"},

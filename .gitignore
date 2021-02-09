@@ -4,6 +4,7 @@ __pycache__/
 *$py.class
 
 inventory.yaml
+vmm_manager.yaml
 *.tar.gz 
 
 # C extensions
