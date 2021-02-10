@@ -149,9 +149,6 @@ class InventoryModule(BaseInventoryPlugin, Constructable, Cacheable):
             # set the cache
             self._cache[cache_key] = self.command_result
 
-        print(f'KEY: {cache_key}\ncache_usuario: {user_cache_setting}\n \
-            cache: {cache}\nread: {attempt_to_read_cache} update: {cache_needs_update}')
-
         self.__populate()
 
     def __run_command(self):

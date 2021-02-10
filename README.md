@@ -28,10 +28,12 @@ poetry install --no-root
 
 ### Configurations
 
-Set the enviromment variable **ANSIBLE_INVENTORY_PLUGINS**:
+Set the enviromments variables:
 
 ```shell
-export ANSIBLE_INVENTORY_PLUGINS='plugins/inventory'
+export ANSIBLE_INVENTORY_PLUGINS=plugins/inventory
+# if jsonfile cache is enabled
+export ANSIBLE_CACHE_PLUGIN_CONNECTION=.cache
 ```
 
 ### Helpful developer commands
