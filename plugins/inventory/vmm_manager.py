@@ -9,7 +9,7 @@ import json
 import os
 from shutil import which
 from ansible.errors import AnsibleError
-from ansible.plugins.inventory import BaseInventoryPlugin
+from ansible.plugins.inventory import BaseInventoryPlugin, Constructable, Cacheable
 
 # pylint: disable=invalid-name
 __metaclass__ = type
@@ -73,6 +73,8 @@ DOCUMENTATION = r'''
     requirements:
         - python >= 3.6
         - vmm_manager >= 0.1
+    extends_documentation_fragment:
+        - inventory_cache
 '''
 
 EXAMPLES = r'''
@@ -89,7 +91,7 @@ vmm_ssh_user: user
 '''
 
 
-class InventoryModule(BaseInventoryPlugin):
+class InventoryModule(BaseInventoryPlugin, Constructable, Cacheable):
     """
     Ansible Inventory plugin class
     """
@@ -127,7 +129,29 @@ class InventoryModule(BaseInventoryPlugin):
         self._read_config_data(path)
         self.__setup()
 
-        self.__run_command()
+        # cache
+        cache_key = self.get_cache_key(path)
+        user_cache_setting = self.get_option('cache')
+
+        attempt_to_read_cache = user_cache_setting and cache
+        cache_needs_update = user_cache_setting and not cache
+
+        if attempt_to_read_cache:
+            try:
+                self.command_result = self._cache[cache_key]
+            except KeyError:
+                cache_needs_update = True
+        else:
+            self.__run_command()
+
+        if cache_needs_update:
+            self.__run_command()
+            # set the cache
+            self._cache[cache_key] = self.command_result
+
+        print(f'KEY: {cache_key}\ncache_usuario: {user_cache_setting}\n \
+            cache: {cache}\nread: {attempt_to_read_cache} update: {cache_needs_update}')
+
         self.__populate()
 
     def __run_command(self):
@@ -185,6 +209,9 @@ class InventoryModule(BaseInventoryPlugin):
 
     def __populate(self):
         all_groups = []
+
+        if not self.command_result:
+            return
 
         for vm_obj in self.command_result.get('vms'):
             groups_vm = []
