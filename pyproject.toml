@@ -22,19 +22,19 @@ classifiers = [
 ]
 
 [tool.poetry.dependencies]
-python = "^3.7"
-ansible = "^2.9"
-vmm-manager = ">=0.1.0b2"
+python = "^3.6"
+ansible = "^2.10"
+vmm-manager = "^0.1"
 
 [tool.poetry.dev-dependencies]
-pylint = "^2.5"
+pylint = "^2.6"
 pylint-quotes = "^0.2"
 autopep8 = "^1.5"
-rope = "^0.17"
-pytest = "^5.4"
-pytest-mock = "^3.1"
-Faker = "^4.1"
+rope = "^0.18"
+pytest = "^6.2"
+pytest-mock = "^3.5"
+Faker = "^5.8"
 
 [build-system]
-requires = ["poetry^1.0"]
-build-backend = "poetry.masonry.api"
+requires = ["poetry_core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"

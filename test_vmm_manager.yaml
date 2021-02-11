@@ -1,5 +1,7 @@
 plugin: vmm_manager
-vmm_inventario: test_inventory.yaml
+vmm_inventario: test_inventory.yaml # vmm_manager inventory file
+cache: True # optional
+cache_plugin: jsonfile # optional
 
 # Best pratices: use enviromment variables to set this parameters
 # vmm_servidor_acesso: 'access_server'
