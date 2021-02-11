@@ -34,7 +34,7 @@ pip install vmm-manager
 
 ### Using the dynamic inventory from this collection in your playbooks
 
-Create an inventory file, named **\*.vmm_manager.yaml**, for example, [test_vmm_manager.yaml](test_vmm_manager.yaml) with this content:
+Create an inventory file, named **\*vmm_manager.yaml**, for example, [test_vmm_manager.yaml](test_vmm_manager.yaml) with this content:
 
 ```yaml
 plugin: vmm_manager
