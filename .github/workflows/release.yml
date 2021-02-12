@@ -44,4 +44,5 @@ jobs:
           poetry run ansible-galaxy collection build
       - name: Publish collection
         run: |
-          ansible-galaxy collection publish mpes-vmm_manager-${{ steps.tag.outputs.tag }}.tar.gz --api-key ${{ secrets.ANSIBLE_GALAXY_TOKEN }}
+          source $HOME/.poetry/env
+          poetry run ansible-galaxy collection publish mpes-vmm_manager-${{ steps.tag.outputs.tag }}.tar.gz --api-key ${{ secrets.ANSIBLE_GALAXY_TOKEN }}
