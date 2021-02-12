@@ -40,7 +40,8 @@ jobs:
           poetry install --no-dev --no-root
       - name: Build project for distribution
         run: |
-          ansible-galaxy collection build
+          source $HOME/.poetry/env
+          poetry run ansible-galaxy collection build
       - name: Publish collection
         run: |
           ansible-galaxy collection publish mpes-vmm_manager-${{ steps.tag.outputs.tag }}.tar.gz --api-key ${{ secrets.ANSIBLE_GALAXY_TOKEN }}
