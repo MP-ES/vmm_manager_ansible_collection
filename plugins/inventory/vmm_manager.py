@@ -61,13 +61,13 @@ DOCUMENTATION = r'''
         vmm_ssh_priv_key_file:
             description: Private SSH key to access the VM's. If the access is valid, the plugin set the ansible var ansible_ssh_private_key_file
             type: string
-            required: True
+            required: False
             env:
                 - name: VMM_SSH_PRIV_KEY_FILE
         vmm_ssh_user:
             description: SSH user to access the VM's
             type: string
-            required: True
+            required: False
             env:
                 - name: VMM_SSH_USER
     requirements:
@@ -86,8 +86,8 @@ vmm_servidor_acesso: 'access_server'
 vmm_servidor: 'scvmm_server'
 vmm_usuario: 'username'
 vmm_senha: 'password'
-vmm_ssh_priv_key_file: '/private/key'
-vmm_ssh_user: user
+vmm_ssh_priv_key_file: '/private/key' # optional
+vmm_ssh_user: user # optional
 '''
 
 
@@ -191,12 +191,18 @@ class InventoryModule(BaseInventoryPlugin, Constructable, Cacheable):
         self.envs['VMM_SENHA'] = self.get_option('vmm_senha')
 
     def __is_ssh_priv_key_ok(self, host_ip):
+        vmm_ssh_priv_key_file = self.get_option('vmm_ssh_priv_key_file')
+        vmm_ssh_user = self.get_option('vmm_ssh_user')
+
+        if not vmm_ssh_priv_key_file or not vmm_ssh_user:
+            return False
+
         try:
             command_exec = subprocess.run(
-                f'ssh -i {self.get_option("vmm_ssh_priv_key_file")} \
+                f'ssh -i {vmm_ssh_priv_key_file} \
                 -o "BatchMode yes" -o "StrictHostKeyChecking no" \
                 -o "IdentitiesOnly yes" -o "PreferredAuthentications publickey" \
-                -o "ControlMaster no" {self.get_option("vmm_ssh_user")}@{host_ip} exit 0',
+                -o "ControlMaster no" {vmm_ssh_user}@{host_ip} exit 0',
                 stdout=subprocess.PIPE,
                 stderr=subprocess.STDOUT,
                 shell=True, check=True, env=self.envs)

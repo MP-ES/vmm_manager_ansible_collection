@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "vmm_manager_ansible_collection"
-version = "0.0.3"
+version = "0.0.4"
 description = "Ansible Collection to support vmm_manager application on Ansible codes."
 authors = ["Estevão Costa <ecosta@mpes.mp.br>"]
 
@@ -14,7 +14,7 @@ documentation = "https://github.com/MP-ES/vmm_manager_ansible_collection"
 keywords = ["IaC", "scvmm", "vmm_manager", "vmm_manager_ansible_collection"]
 
 classifiers = [
-    "Development Status :: 4 - Beta",
+    "Development Status :: 5 - Production/Stable",
     "Operating System :: POSIX :: Linux",
     "Intended Audience :: System Administrators",
     "Topic :: System :: Installation/Setup",
