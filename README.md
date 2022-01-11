@@ -47,8 +47,8 @@ cache_plugin: jsonfile # optional
 # vmm_servidor: 'scvmm_server'
 # vmm_usuario: 'username'
 # vmm_senha: 'password'
-# vmm_ssh_priv_key_file: '/private/key'
-# vmm_ssh_user: user
+# vmm_ssh_priv_key_file: '/private/key' # optional
+# vmm_ssh_user: user # optional
 ```
 
 Use the command `ansible-doc -t inventory vmm_manager` for more details.
@@ -101,7 +101,7 @@ export ANSIBLE_CACHE_PLUGIN_CONNECTION=.cache
 # developer shell
 poetry shell
 
-# Load envs (optional)
+# Load envs
 export $(cat .env | xargs)
 
 # Check documentation
