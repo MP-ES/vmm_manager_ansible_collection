@@ -23,7 +23,7 @@ classifiers = [
 
 [tool.poetry.dependencies]
 python = "^3.6"
-ansible = "^2.10"
+ansible = "^4.2"
 vmm-manager = "^0.1"
 
 [tool.poetry.dev-dependencies]
