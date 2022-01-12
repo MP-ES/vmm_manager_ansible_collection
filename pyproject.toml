@@ -22,18 +22,15 @@ classifiers = [
 ]
 
 [tool.poetry.dependencies]
-python = "^3.6"
-ansible = "^2.10"
+python = "^3.8"
+ansible = "^5"
 vmm-manager = "^0.1"
 
 [tool.poetry.dev-dependencies]
-pylint = "^2.6"
+pylint = "^2.12"
 pylint-quotes = "^0.2"
-autopep8 = "^1.5"
-rope = "^0.18"
-pytest = "^6.2"
-pytest-mock = "^3.5"
-Faker = "^5.8"
+autopep8 = "^1.6"
+rope = "^0.22"
 
 [build-system]
 requires = ["poetry_core>=1.0.0"]

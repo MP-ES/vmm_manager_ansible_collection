@@ -104,6 +104,9 @@ poetry shell
 # Load envs
 export $(cat .env | xargs)
 
+# List inventories
+ansible-doc -t inventory -l
+
 # Check documentation
 ansible-doc -t inventory vmm_manager
 
