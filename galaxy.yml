@@ -2,13 +2,11 @@
 
 namespace: mpes
 name: vmm_manager
-version: 0.0.3
-
+version: 0.0.4
 
 readme: README.md
 authors:
-- Estevão Costa <ecosta@mpes.mp.br>
-
+  - Estevão Costa <ecosta@mpes.mp.br>
 
 ### OPTIONAL but strongly recommended
 
@@ -23,7 +21,6 @@ tags:
   - vmm_manager
   - scvmm
   - mpes
-
 
 # Collections that this collection requires to be installed for it to be usable. The key of the dict is the
 # collection label 'namespace.name'. The value is a version range
