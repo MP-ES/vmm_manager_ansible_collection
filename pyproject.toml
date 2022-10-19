@@ -23,14 +23,14 @@ classifiers = [
 
 [tool.poetry.dependencies]
 python = "^3.8"
-ansible = "^5"
-vmm-manager = "^0.1"
+ansible = "^5|^6"
+vmm-manager = ">=0.1"
 
 [tool.poetry.dev-dependencies]
-pylint = "^2.12"
+pylint = "^2"
 pylint-quotes = "^0.2"
-autopep8 = "^1.6"
-rope = "^0.22"
+autopep8 = "^1"
+rope = "^1"
 
 [build-system]
 requires = ["poetry_core>=1.0.0"]

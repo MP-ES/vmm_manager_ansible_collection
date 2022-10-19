@@ -70,13 +70,12 @@ For more details about Ansible cache, see [Ansible cache plugins](https://docs.a
 ### python-poetry configuration
 
 ```shell
-# poetry install
-curl -sSL https://raw.githubusercontent.com/sdispater/poetry/master/get-poetry.py | python
-echo 'source $HOME/.poetry/env' >>~/.bashrc
+# poetry installation
+curl -sSL https://install.python-poetry.org | python3 -
 
 # autocomplete configuration
-# Bash
-$HOME/.poetry/bin/poetry completions bash | sudo tee /etc/bash_completion.d/poetry.bash-completion
+# bash
+poetry completions bash >> ~/.bash_completion
 ```
 
 ### Dependencies
