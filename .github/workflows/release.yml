@@ -3,7 +3,7 @@ name: Release
 on:
   push:
     tags:
-      - "*.*.*"
+      - '*.*.*'
 
 jobs:
   Release:
@@ -32,16 +32,13 @@ jobs:
           python-version: 3.9
       - name: Install Poetry
         run: |
-          curl -sSL https://raw.githubusercontent.com/sdispater/poetry/master/get-poetry.py | python
+          curl -sSL https://install.python-poetry.org | python3 -
       - name: Install dependencies
         run: |
-          source $HOME/.poetry/env
           poetry install --no-dev --no-root
       - name: Build project for distribution
         run: |
-          source $HOME/.poetry/env
           poetry run ansible-galaxy collection build
       - name: Publish collection
         run: |
-          source $HOME/.poetry/env
           poetry run ansible-galaxy collection publish mpes-vmm_manager-${{ steps.tag.outputs.tag }}.tar.gz --api-key ${{ secrets.ANSIBLE_GALAXY_TOKEN }}
