@@ -3,7 +3,7 @@
 Ansible collection to support [vmm_manager](https://github.com/MP-ES/vmm_manager) application on Ansible codes.
 
 [![License](https://img.shields.io/github/license/MP-ES/vmm_manager_ansible_collection.svg)](LICENSE)
-[![Tests](https://github.com/MP-ES/vmm_manager_ansible_collection/workflows/Tests/badge.svg)](https://github.com/MP-ES/vmm_manager_ansible_collection/actions?query=workflow%3ATests)
+[![Integration](https://github.com/MP-ES/vmm_manager_ansible_collection/workflows/Integration/badge.svg)](https://github.com/MP-ES/vmm_manager_ansible_collection/actions?query=workflow%3AIntegration)
 [![Release](https://github.com/MP-ES/vmm_manager_ansible_collection/workflows/Release/badge.svg)](https://github.com/MP-ES/vmm_manager_ansible_collection/actions?query=workflow%3ARelease)
 
 ## Installation and usage
