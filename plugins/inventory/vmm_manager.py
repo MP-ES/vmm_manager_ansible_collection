@@ -18,7 +18,7 @@ DOCUMENTATION = r'''
     name: vmm_manager
     plugin_type: inventory
     author:
-      - Estevão Costa (@estevao90)
+        - Estevão Costa (@estevao90)
     short_description: vmm_manager inventory source.
     description:
         - Fetch virtual machines from SCVMM through vmm_manager app.
@@ -218,11 +218,16 @@ class InventoryModule(BaseInventoryPlugin, Constructable, Cacheable):
 
         for vm_obj in self.command_result.get('vms'):
             groups_vm = []
+            all_vars = []
 
             # iterate over ansible data
             for ansible_entry in vm_obj.get('ansible'):
                 group = ansible_entry.get('grupo')
                 groups_vm.append(group)
+
+                # append extra vars
+                for var in ansible_entry.get('vars'):
+                    all_vars.append(var)
 
                 if group not in all_groups:
                     self.inventory.add_group(group)
@@ -269,3 +274,8 @@ class InventoryModule(BaseInventoryPlugin, Constructable, Cacheable):
 
                 self.inventory.set_variable(
                     host, 'network_json', vm_obj.get('redes'))
+
+                # add extra vars
+                for var in all_vars:
+                    self.inventory.set_variable(
+                        host, var.get('nome'), var.get('valor'))
