@@ -100,6 +100,9 @@ export ANSIBLE_CACHE_PLUGIN_CONNECTION=.cache
 # developer shell
 poetry shell
 
+# delete poetry virtualenv
+poetry env remove python3.10
+
 # Load envs
 export $(cat .env | xargs)
 

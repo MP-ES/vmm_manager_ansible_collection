@@ -22,9 +22,9 @@ classifiers = [
 ]
 
 [tool.poetry.dependencies]
-python = "^3.8"
-ansible = "^5|^6"
-vmm-manager = ">=0.1"
+python = "^3.9"
+ansible = "^7|^8"
+vmm-manager = ">=0.3"
 
 [tool.poetry.dev-dependencies]
 pylint = "^2"
