@@ -86,7 +86,7 @@ poetry install --no-root
 
 ### Configurations
 
-Set the environments variables:
+Set the environment variables:
 
 ```shell
 export ANSIBLE_INVENTORY_PLUGINS=plugins/inventory
