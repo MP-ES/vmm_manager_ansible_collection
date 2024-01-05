@@ -62,7 +62,8 @@ DOCUMENTATION = r'''
             env:
                 - name: VMM_PASSWORD
         vmm_ssh_priv_key_file:
-            description: Private SSH key to access the VMs. If the access is valid, the plugin set the ansible var ansible_ssh_private_key_file.
+            description: Private SSH key to access the VMs.
+                        If the access is valid, the plugin set the ansible var ansible_ssh_private_key_file.
             type: string
             required: False
             env:
