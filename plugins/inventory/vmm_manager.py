@@ -2,14 +2,17 @@
 vmm_manager inventory plugin
 """
 
-from __future__ import (absolute_import, division, print_function)
-import re
-import subprocess
+from __future__ import absolute_import, division, print_function
+
 import json
 import os
+import re
+import subprocess
 from shutil import which
+
 from ansible.errors import AnsibleError
-from ansible.plugins.inventory import BaseInventoryPlugin, Constructable, Cacheable
+from ansible.plugins.inventory import (BaseInventoryPlugin, Cacheable,
+                                       Constructable)
 
 # pylint: disable=invalid-name
 __metaclass__ = type
@@ -21,71 +24,72 @@ DOCUMENTATION = r'''
         - Estevão Costa (@estevao90)
     short_description: vmm_manager inventory source.
     description:
-        - Fetch virtual machines from SCVMM through vmm_manager app.
+        - Fetch virtual machines from SCVMM through the vmm_manager app.
     options:
         plugin:
-            description: Marks this as an instance of the 'vmm_manager' plugin
+            description: Marks this as an instance of the 'vmm_manager' plugin.
             required: True
             choices: ['mpes.vmm_manager.vmm_manager', 'vmm_manager']
-        vmm_servidor_acesso:
-            description: Windows server with OpenSSH and access to SCVMM PowerShell
+        vmm_access_point:
+            description: Windows server with OpenSSH and access to SCVMM PowerShell.
             type: string
             required: True
             env:
-                - name: VMM_SERVIDOR_ACESSO
-        vmm_servidor:
-            description: SCVMM Server
+                - name: VMM_ACCESS_POINT
+        vmm_server:
+            description: SCVMM Server.
             type: string
             required: True
             env:
-                - name: VMM_SERVIDOR
-        vmm_inventario:
-            description: Inventory file (YAML format)
+                - name: VMM_SERVER
+        vmm_inventory:
+            description: Inventory file (YAML format).
             type: string
             required: True
             env:
-                - name: VMM_INVENTARIO
-        vmm_usuario:
-            description: User with access to Windows access server and SCVMM
+                - name: VMM_INVENTORY
+        vmm_username:
+            description: User with access to Windows access server and SCVMM.
             type: string
             required: True
             env:
-                - name: VMM_USUARIO
-        vmm_senha:
-            description: User password
+                - name: VMM_USERNAME
+        vmm_password:
+            description: User password.
             type: string
             required: True
             secret: True
             env:
-                - name: VMM_SENHA
+                - name: VMM_PASSWORD
         vmm_ssh_priv_key_file:
-            description: Private SSH key to access the VM's. If the access is valid, the plugin set the ansible var ansible_ssh_private_key_file
+            description: Private SSH key to access the VMs.
+                        If the access is valid, the plugin set the ansible var ansible_ssh_private_key_file.
             type: string
             required: False
             env:
                 - name: VMM_SSH_PRIV_KEY_FILE
         vmm_ssh_user:
-            description: SSH user to access the VM's
+            description: SSH user to access the VMs.
             type: string
             required: False
             env:
                 - name: VMM_SSH_USER
     requirements:
-        - python >= 3.6
-        - vmm_manager >= 0.1
+        - python >= 3.9
+        - vmm_manager ^1
     extends_documentation_fragment:
         - inventory_cache
 '''
 
 EXAMPLES = r'''
 # create the inventory described in test_inventory.yaml
-# You can pass the parameters through enviromment variables: see docs
+# You can pass the parameters through environment variables: see docs
 plugin: vmm_manager
-vmm_inventario: inventory.yaml
-vmm_servidor_acesso: 'access_server'
-vmm_servidor: 'scvmm_server'
-vmm_usuario: 'username'
-vmm_senha: 'password'
+vmm_inventory: inventory.yaml
+vmm_access_point: 'access_server'
+vmm_server: 'scvmm_server'
+vmm_username: 'username'
+vmm_password: 'password'
 vmm_ssh_priv_key_file: '/private/key' # optional
 vmm_ssh_user: user # optional
 '''
@@ -175,20 +179,20 @@ class InventoryModule(BaseInventoryPlugin, Constructable, Cacheable):
             )
         self.command.append(InventoryModule.VMM_MANAGER_APP)
 
-        self.command.append('--servidor-acesso')
-        self.command.append(self.get_option('vmm_servidor_acesso'))
-        self.command.append('--servidor')
-        self.command.append(self.get_option('vmm_servidor'))
+        self.command.append('--access-point')
+        self.command.append(self.get_option('vmm_access_point'))
+        self.command.append('--server')
+        self.command.append(self.get_option('vmm_server'))
 
-        self.command.append('-o')
+        self.command.append('--hide-progress')
         self.command.append('show')
 
-        self.command.append('--inventario')
-        self.command.append(os.path.abspath(self.get_option('vmm_inventario')))
+        self.command.append('--inventory')
+        self.command.append(os.path.abspath(self.get_option('vmm_inventory')))
 
         # user and password as env
-        self.envs['VMM_USUARIO'] = self.get_option('vmm_usuario')
-        self.envs['VMM_SENHA'] = self.get_option('vmm_senha')
+        self.envs['VMM_USERNAME'] = self.get_option('vmm_username')
+        self.envs['VMM_PASSWORD'] = self.get_option('vmm_password')
 
     def __is_ssh_priv_key_ok(self, host_ip):
         vmm_ssh_priv_key_file = self.get_option('vmm_ssh_priv_key_file')
@@ -222,7 +226,7 @@ class InventoryModule(BaseInventoryPlugin, Constructable, Cacheable):
 
             # iterate over ansible data
             for ansible_entry in vm_obj.get('ansible'):
-                group = ansible_entry.get('grupo')
+                group = ansible_entry.get('group')
                 groups_vm.append(group)
 
                 # append extra vars
@@ -235,7 +239,7 @@ class InventoryModule(BaseInventoryPlugin, Constructable, Cacheable):
 
             # add host just if it is in a group
             if groups_vm:
-                host = vm_obj.get('nome')
+                host = vm_obj.get('name')
                 self.inventory.add_host(host)
 
                 for group_vm in groups_vm:
@@ -243,8 +247,8 @@ class InventoryModule(BaseInventoryPlugin, Constructable, Cacheable):
 
                 # add hostvars
                 host_ip = [network.get('ips')[0]
-                           for network in vm_obj.get('redes')
-                           if network.get('principal')].pop()
+                           for network in vm_obj.get('networks')
+                           if network.get('default')].pop()
 
                 self.inventory.set_variable(
                     host, 'ansible_host', host_ip)
@@ -254,28 +258,28 @@ class InventoryModule(BaseInventoryPlugin, Constructable, Cacheable):
                         self.get_option('vmm_ssh_priv_key_file'))
 
                 self.inventory.set_variable(
-                    host, 'vm_id', vm_obj.get('id_vmm'))
+                    host, 'vm_id', vm_obj.get('vmm_id'))
                 self.inventory.set_variable(
-                    host, 'vm_description', vm_obj.get('descricao'))
+                    host, 'vm_description', vm_obj.get('description'))
                 self.inventory.set_variable(
-                    host, 'vm_image', vm_obj.get('imagem'))
+                    host, 'vm_image', vm_obj.get('image'))
 
                 self.inventory.set_variable(
-                    host, 'vm_region', vm_obj.get('regiao'))
+                    host, 'vm_region', vm_obj.get('region'))
                 self.inventory.set_variable(
-                    host, 'vm_region_server', vm_obj.get('no_regiao'))
+                    host, 'vm_region_host', vm_obj.get('region_host'))
 
                 self.inventory.set_variable(
                     host, 'vm_status', vm_obj.get('status'))
                 self.inventory.set_variable(
-                    host, 'vm_cpu', vm_obj.get('qtde_cpu'))
+                    host, 'vm_cpu', vm_obj.get('cpu'))
                 self.inventory.set_variable(
-                    host, 'vm_ram_mb', vm_obj.get('qtde_ram_mb'))
+                    host, 'vm_memory', vm_obj.get('memory'))
 
                 self.inventory.set_variable(
-                    host, 'network_json', vm_obj.get('redes'))
+                    host, 'network_json', vm_obj.get('networks'))
 
                 # add extra vars
                 for var in all_vars:
                     self.inventory.set_variable(
-                        host, var.get('nome'), var.get('valor'))
+                        host, var.get('name'), var.get('value'))

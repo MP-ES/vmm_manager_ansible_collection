@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "vmm_manager_ansible_collection"
-version = "0.1.1"
+version = "1.0.0"
 description = "Ansible Collection to support vmm_manager application on Ansible codes."
 authors = ["Estevão Costa <ecosta@mpes.mp.br>"]
 
@@ -23,13 +23,14 @@ classifiers = [
 
 [tool.poetry.dependencies]
 python = "^3.9"
-ansible = "^7|^8"
-vmm-manager = ">=0.3"
+ansible = "^8|^9"
+vmm-manager = "^1"
 
 [tool.poetry.dev-dependencies]
-pylint = "^2"
-pylint-quotes = "^0.2"
-autopep8 = "^1"
+autopep8 = "^2"
+flake8 = "^6"
+flake8-quotes = "^3"
+isort = "^5"
 rope = "^1"
 
 [build-system]
