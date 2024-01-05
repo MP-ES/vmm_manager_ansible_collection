@@ -11,18 +11,18 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: "3.11"
+          python-version: "3.12"
 
       - name: Install dependencies
         run: |
           curl -sSL https://install.python-poetry.org | python3 -
           poetry install --no-root
 
-      - name: Lint with pylint
+      - name: Linting
         run: |
-          poetry run pylint --load-plugins pylint_quotes plugins/inventory/vmm_manager.py
+          poetry run flake8 . && poetry run isort --check-only --diff .

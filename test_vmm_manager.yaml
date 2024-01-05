@@ -1,12 +1,12 @@
 plugin: vmm_manager
-vmm_inventario: test_inventory.yaml # vmm_manager inventory file
+vmm_inventory: test_inventory.yaml # vmm_manager inventory file
 cache: True # optional
 cache_plugin: jsonfile # optional
 
-# Best pratices: use enviromment variables to set this parameters
-# vmm_servidor_acesso: 'access_server'
-# vmm_servidor: 'scvmm_server'
-# vmm_usuario: 'username'
-# vmm_senha: 'password'
+# Best practices: use environment variables to set these parameters
+# vmm_access_point: 'access_server'
+# vmm_server: 'scvmm_server'
+# vmm_username: 'username'
+# vmm_password: 'password'
 # vmm_ssh_priv_key_file: '/private/key' # optional
 # vmm_ssh_user: user # optional

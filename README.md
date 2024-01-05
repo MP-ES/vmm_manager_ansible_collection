@@ -38,15 +38,15 @@ Create an inventory file, named **\*vmm_manager.yaml**, for example, [test_vmm_m
 
 ```yaml
 plugin: vmm_manager
-vmm_inventario: test_inventory.yaml # vmm_manager inventory file
+vmm_inventory: test_inventory.yaml # vmm_manager inventory file
 cache: True # optional
 cache_plugin: jsonfile # optional
 
-# Best pratices: use enviromment variables to set this parameters
-# vmm_servidor_acesso: 'access_server'
-# vmm_servidor: 'scvmm_server'
-# vmm_usuario: 'username'
-# vmm_senha: 'password'
+# Best practices: use environment variables to set these parameters
+# vmm_access_point: 'access_server'
+# vmm_server: 'scvmm_server'
+# vmm_username: 'username'
+# vmm_password: 'password'
 # vmm_ssh_priv_key_file: '/private/key' # optional
 # vmm_ssh_user: user # optional
 ```
@@ -57,7 +57,7 @@ Use the command `ansible-doc -t inventory vmm_manager` for more details.
 
 If cache is enabled (recommend, due the response time of SCVMM queries), you have to set the cache plugin that Ansible will use (cache_plugin).
 
-In case of **jsonfile** plugin, you have to set the cache location path, throught enviromment variable **ANSIBLE_CACHE_PLUGIN_CONNECTION**, for example:
+In case of **jsonfile** plugin, you have to set the cache location path, through environment variable **ANSIBLE_CACHE_PLUGIN_CONNECTION**, for example:
 
 ```shell
 export ANSIBLE_CACHE_PLUGIN_CONNECTION=.cache
@@ -86,7 +86,7 @@ poetry install --no-root
 
 ### Configurations
 
-Set the enviromments variables:
+Set the environments variables:
 
 ```shell
 export ANSIBLE_INVENTORY_PLUGINS=plugins/inventory
@@ -101,7 +101,7 @@ export ANSIBLE_CACHE_PLUGIN_CONNECTION=.cache
 poetry shell
 
 # delete poetry virtualenv
-poetry env remove python3.10
+poetry env remove python
 
 # Load envs
 export $(cat .env | xargs)
@@ -115,8 +115,11 @@ ansible-doc -t inventory vmm_manager
 # Test inventory list
 ansible-inventory -i test_vmm_manager.yaml --list
 
-# Lint
-pylint --load-plugins pylint_quotes plugins/inventory/vmm_manager.py
+# Run linting
+flake8 . && isort --check-only --diff .
+
+# Fix dependencies sorting
+isort .
 ```
 
 ## References
