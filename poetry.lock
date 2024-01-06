@@ -733,13 +733,13 @@ telegram = ["requests"]
 
 [[package]]
 name = "vmm-manager"
-version = "1.0.0"
+version = "1.0.1"
 description = "Management of resources on System Center Virtual Machine Manager (SCVMM) in a declarative way."
 optional = false
 python-versions = ">=3.9,<4.0"
 files = [
-    {file = "vmm_manager-1.0.0-py3-none-any.whl", hash = "sha256:d9e83700631e48c518c98bdc896f4a9fdffb55865ac08c6fd546e9199c87e4c7"},
-    {file = "vmm_manager-1.0.0.tar.gz", hash = "sha256:3da43f2b7aa9abe5ef771281d9d898d5d4f14aceea20d618ca171528e7ecc3c3"},
+    {file = "vmm_manager-1.0.1-py3-none-any.whl", hash = "sha256:c01a6705eb7eedc064bf2a1717861e6d3c51053e78d8ac3e92811ca8ef08895e"},
+    {file = "vmm_manager-1.0.1.tar.gz", hash = "sha256:6bdffe1d58298fe04b59cb389a24cce1812e6f7b3569a460d59fc067ec083737"},
 ]
 
 [package.dependencies]
